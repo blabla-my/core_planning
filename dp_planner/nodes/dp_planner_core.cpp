@@ -534,7 +534,7 @@ void PlannerX::callbackGetWayPlannerPath(const autoware_msgs::LaneArrayConstPtr&
 						tf::getYaw(msg->lanes.at(i).waypoints.at(j).pose.pose.orientation));
 				wp.v = msg->lanes.at(i).waypoints.at(j).twist.twist.linear.x;
 				wp.laneId = msg->lanes.at(i).waypoints.at(j).twist.twist.linear.y;
-				wp.stopLineID = msg->lanes.at(i).waypoints.at(j).twist.twist.linear.z;
+				wp.stopLineId = msg->lanes.at(i).waypoints.at(j).twist.twist.linear.z;
 				wp.laneChangeCost = msg->lanes.at(i).waypoints.at(j).twist.twist.angular.x;
 				wp.LeftPointId = msg->lanes.at(i).waypoints.at(j).twist.twist.angular.y;
 				wp.RightPointId = msg->lanes.at(i).waypoints.at(j).twist.twist.angular.z;

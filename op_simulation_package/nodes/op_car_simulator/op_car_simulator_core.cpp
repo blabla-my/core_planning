@@ -21,7 +21,6 @@
 #include "op_planner/MatrixOperations.h"
 #include <geometry_msgs/PoseArray.h>
 #include <pcl_ros/transforms.h>
-#include "op_ros_helpers/PolygonGenerator.h"
 #include "op_ros_helpers/op_ROSHelpers.h"
 #include "op_planner/KmlMapLoader.h"
 #include "op_planner/Lanelet2MapLoader.h"

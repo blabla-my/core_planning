@@ -77,7 +77,7 @@ void ROSHelpers::ConvertFromPlannerHToAutowarePathFormat(const std::vector<Plann
 		wp.pose.pose.orientation = tf::createQuaternionMsgFromYaw(UtilityHNS::UtilityH::SplitPositiveAngle(path.at(i).pos.a));
 		wp.twist.twist.linear.x = path.at(i).v;
 		wp.twist.twist.linear.y = path.at(i).laneId;
-		wp.twist.twist.linear.z = path.at(i).stopLineID;
+		wp.twist.twist.linear.z = path.at(i).stopLineId;
 		wp.twist.twist.angular.x = path.at(i).laneChangeCost;
 		wp.twist.twist.angular.y = path.at(i).LeftPointId;
 		wp.twist.twist.angular.z = path.at(i).RightPointId;
