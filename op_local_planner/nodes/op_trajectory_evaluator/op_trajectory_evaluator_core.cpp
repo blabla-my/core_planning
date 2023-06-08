@@ -58,6 +58,9 @@ TrajectoryEvalCore::TrajectoryEvalCore()
 
 	m_TrajectoryCostsCalculator.SetEvalParams(m_EvaluationParams);
 	PlannerHNS::ROSHelpers::InitCollisionPointsMarkers(500, m_CollisionsDummy);
+
+	m_MapHandler.InitMapHandler(nh, "/op_common_params/mapSource",
+			"/op_common_params/mapFileName", "/op_common_params/lanelet2_origin");
 }
 
 TrajectoryEvalCore::~TrajectoryEvalCore()
@@ -105,6 +108,7 @@ void TrajectoryEvalCore::UpdatePlanningParams(ros::NodeHandle& _nh)
 	_nh.getParam("/op_common_params/minDistanceToAvoid", m_PlanningParams.minDistanceToAvoid);
 	_nh.getParam("/op_common_params/maxDistanceToAvoid", m_PlanningParams.maxDistanceToAvoid);
 	_nh.getParam("/op_common_params/speedProfileFactor", m_PlanningParams.speedProfileFactor);
+	_nh.getParam("/op_common_params/enableBlockingRolloutsOutOfMap", m_PlanningParams.enableBlockingRolloutsOutOfMap);
 
 	_nh.getParam("/op_common_params/enableLaneChange", m_PlanningParams.enableLaneChange);
 	if(!m_PlanningParams.enableLaneChange)
@@ -231,7 +235,7 @@ void TrajectoryEvalCore::callbackGetGlobalPlannerPath(const autoware_msgs::LaneA
 
 void TrajectoryEvalCore::callbackGetLocalPlannerPath(const autoware_msgs::LaneArrayConstPtr& msg)
 {
-	if(msg->lanes.size() != (m_PlanningParams.rollOutNumber + 1))
+	if(msg->lanes.size() != m_GlobalPaths.size()*(m_PlanningParams.rollOutNumber + 1))
 	{
 		std::cout << " ### Waiting until nodes are synchronized, Generated rollouts = " << msg->lanes.size() << ", But They should = " << m_PlanningParams.rollOutNumber + 1 << std::endl;
 		return;
@@ -434,7 +438,10 @@ void TrajectoryEvalCore::MainLoop()
 	while (ros::ok())
 	{
 		ros::spinOnce();
-
+		if( ! m_MapHandler.IsMapLoaded())
+		{
+			m_MapHandler.LoadMap(m_TrajectoryCostsCalculator.m_Map, m_PlanningParams.enableLaneChange);
+		}
 
 		if(bNewCurrentPos)
 		{

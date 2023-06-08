@@ -17,7 +17,6 @@
 #include "op_motion_predictor_core.h"
 #include "op_planner/MappingHelpers.h"
 #include "op_ros_helpers/op_ROSHelpers.h"
-
 namespace MotionPredictorNS
 {
 
