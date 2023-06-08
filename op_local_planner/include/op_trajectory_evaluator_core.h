@@ -32,6 +32,7 @@
 #include "op_planner/TrajectoryEvaluator.h"
 #include "op_ros_helpers/ROSVelocityHandler.h"
 #include "op_ros_helpers/op_ParamsHandler.h"
+#include "op_ros_helpers/ROSMapHandler.h"
 
 namespace TrajectoryEvaluatorNS
 {
@@ -75,6 +76,7 @@ protected:
   	PlannerHNS::PlanningParams m_PlanningParams;
   	PlannerHNS::PlanningParams m_ModPlanningParams;
   	PlannerHNS::CAR_BASIC_INFO m_CarInfo;
+	PlannerHNS::MapHandler m_MapHandler;
 
   	PlannerHNS::BehaviorState m_CurrentBehavior;
   	double m_AdditionalFollowDistance;
